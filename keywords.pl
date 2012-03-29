@@ -20,7 +20,7 @@ keywords.pl [Options]
 =head1 DESCRIPTION
 
 This script takes a text file as input and extracts unique words/terms from it. The terms are then written with 
-the separator specified. Words < minimum length are not included. The purpose is in OCR and Keywords testing. 
+the separator specified. Words < minimum length are not included. The purpose is in search and pattern match test.
 
 Usage: perl keywords.pl --file=input.txt --sep=and --min=4  > unique_terms.txt
 
@@ -43,17 +43,14 @@ GetOptions("help|?=s"        => \$g_help,
     or pod2usage(-verbose => 2);
 
 #~~~~~~~~~~~~~~~~~~~~
-
 main();
-exit(0);
-
+exit(1);
 #~~~~~~~~~~~~~~~~~~~~
 
 #~~~~~~~~~~~~~~~~~~~
 sub main {
 my ($count, $chars, $match, $input, $term);
 my @terms = (); 
-my @unique = (); 
 my %dupe = ();
 
 # default separator is a comma 
@@ -62,7 +59,7 @@ if ($g_sep eq "and") {
     } elsif ($g_sep eq "or") {
       $g_sep = " or ";
     } else {$g_sep = ",";
-    }
+  }
 
 # default min chars is 5 
 unless ($g_min =~ m/\d/ && length($g_min) > 0) { 
@@ -85,24 +82,20 @@ if (-e $g_filename) {
         unless ($dupe{$term}) {
           # match words/numbers >= min
           my $match = $term =~ /([a-zA-Z0-9-]{$g_min,})/;
-          # if there is a match, push it onto array
+          # if there is a match, push it into hash
           if ($1) {
-            push @unique, $1;
-            # this creates a "dupe" hash key with value = 1 (don't care about value)
+            # this creates hash values = 1 for all. I don't need the word count.
             $dupe{$1} = 1;
             } # end if
           } # end unless
         } # end foreach
 
-    # I did the unique terms 2 different ways. This doesn't work?
-    # print join($g_sep,sort(@unique)), "\n";
-
     # print out the list of terms here, sorted alpha
     print join($g_sep,sort keys %dupe); 
     print "\n\n----------------------------------------------\n";
-    # I need a count of the hash keys here, not @unique
+    # I need a count of the hash keys here
     $count = scalar keys %dupe;
-    print "the unique word count in $g_filename is $count.\n";
+    print "the unique word count of length $g_min in $g_filename is $count.\n";
 
   } else { 
     # filename does not exist
