@@ -51,11 +51,10 @@ exit(0);
 
 #~~~~~~~~~~~~~~~~~~~
 sub main {
-my ($count, $chars, $match);
+my ($count, $chars, $match, $input, $term);
 my @terms = (); 
 my @unique = (); 
 my %dupe = ();
-my ($input,$a); 
 
 # default separator is a comma 
 if ($g_sep eq "and") {
@@ -70,8 +69,7 @@ unless ($g_min =~ m/\d/ && length($g_min) > 0) {
       $g_min = 5;
     }
 
-# print "options are $g_sep and $g_filename and $g_min here! \n";
-# If the filename is valid, slurp file into a variable
+# If the filename is valid, slurp file into variable $input
 if (-e $g_filename) {
 {
     local( $/, *FH ) ;
@@ -79,14 +77,14 @@ if (-e $g_filename) {
     $input = <FH>;
 }
 
-      # Split words on whitespace (default) into array
+      # Split words on whitespace (default) into terms array
       @terms = split(/\s/,$input);
  
-      foreach $a(@terms) {
+      foreach $term(@terms) {
         # if "key" not already there...
-        unless ($dupe{$a}) {
+        unless ($dupe{$term}) {
           # match words/numbers >= min
-          my $match = $a =~ /([a-zA-Z0-9-]{$g_min,})/;
+          my $match = $term =~ /([a-zA-Z0-9-]{$g_min,})/;
           # if there is a match, push it onto array
           if ($1) {
             push @unique, $1;
