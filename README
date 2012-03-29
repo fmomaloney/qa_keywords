@@ -1,0 +1,7 @@
+# readme file for perl keywords text extractor
+
+This utility is designed for QA purposes. Point it at a text file and it 
+should get a list of keywords found in the file. The purpose is for testing 
+search or pattern match highlighting against the file. 
+ 
+# the end
