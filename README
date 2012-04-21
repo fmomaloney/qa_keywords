@@ -2,8 +2,15 @@
 
 This utility is designed for QA purposes. Point it at a text file and it 
 should get a list of keywords found in the file. The purpose is for testing 
-search or pattern match highlighting against the file. 
+search or pattern match highlighting against the file. Pipe or redirect output.
  
 Help is available via -? or --help. Dependencies are perl and getopt. 
+
+# usage example
+fmaloney@fmaloney-AsusUL20:~/github/keywords$ ./keywords.pl --file ../../Desktop/wasteland.txt --min 10
+Alexandria,Belladonna,Coriolanus,Endeavours,Inexplicable,Phoenician,Reflecting,Shakespeherian,Starnbergersee,Unstoppered,acquainted,anthropology,apothanein,beneficent,candelabra,candle-flames,carbuncular,ceremonies,clairvoyante,combinations,controlling,difficulties,elucidation,especially,fingernails,foresuffered,frightened,generation,gramophone,half-formed,handkerchiefs,hermit-thrush,immediately,incidental,indifference,influenced,infrequent,intelligent,inviolable,lamentation,millionaire,mudcracked,nevertheless,nightingale,obituaries,patronising,perilously,profoundly,propitious,references,reminiscent,respondebat,reverberation,sevenbranched,situations,thirty-one,torchlight,unreproved,vegetation
+
+----------------------------------------------
+the unique word count of length 10 in ../../Desktop/wasteland.txt is 59.
 
 # the end
